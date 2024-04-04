@@ -20,10 +20,10 @@ jobs:
          repository: 'docker.io/python-assignment-image'
          Dockerfile: '**/Dockerfile'
          tags: v1 
-    - task: KubernetesManifest@0
-      displayName: 'Deploy to AKS'
-      inputs:
-        action: 'deploy'
-        kubernetesServiceConnection: 'aks-connection-url'
-        namespace: 'default'
-        manifests: 'kubernetes/**/*.yaml'
+     - task: KubernetesManifest@0
+       displayName: 'Deploy to AKS'
+       inputs:
+         action: 'deploy'
+         kubernetesServiceConnection: 'aks-connection-url'
+         namespace: 'default'
+         manifests: 'kubernetes/**/*.yaml'
