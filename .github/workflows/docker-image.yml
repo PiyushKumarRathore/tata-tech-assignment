@@ -13,6 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-pyhton-test:$(date +%s)
+     - task: Docker@2
+       displayName: 'Build and push Docker image'
+       inputs:
+         command: 'buildAndPush'
+         repository: 'docker.io/python-assignment-image'
+         Dockerfile: '**/Dockerfile'
+         tags: v1 
+    - task: KubernetesManifest@0
+      displayName: 'Deploy to AKS'
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'aks-connection-url'
+        namespace: 'default'
+        manifests: 'kubernetes/**/*.yaml'
